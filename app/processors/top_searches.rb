@@ -1,20 +1,15 @@
-module Processors
-  class TopSearches
-    attr_accessor :url
+class TopSearches
+  attr_accessor :urls
 
-    def self.call(data)
-      new(data).call
-    end
+  def self.call(data)
+    new(data).call
+  end
 
-    private
+  def initialize(data)
+    @urls = data[:urls]
+  end
 
-    def initialize(data)
-      @url = data[:url]
-    end
-
-    def call
-      html = AsyncLoader.fetch([url]).first
-      debugger
-    end
+  def call
+    html = AsyncLoader.fetch(urls).first
   end
 end

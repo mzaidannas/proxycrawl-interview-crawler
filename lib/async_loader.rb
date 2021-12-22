@@ -4,7 +4,7 @@ require 'async/http/internet/instance'
 require 'kernel/sync'
 
 class AsyncLoader
-  def fetch(urls, headers: {})
+  def self.fetch(urls, headers: {})
     Sync do
       internet = Async::HTTP::Internet.instance
       barrier = Async::Barrier.new
