@@ -20,6 +20,7 @@ require 'active_record/railtie'
 Bundler.require(*Rails.groups)
 
 require_relative '../lib/async_loader'
+require_relative '../lib/publisher'
 
 module Api
   class Application < Rails::Application

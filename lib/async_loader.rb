@@ -15,7 +15,7 @@ class AsyncLoader
           Rails.logger.debug "AsyncHttp#get: #{url}"
           begin
             response = internet.get(url, headers)
-            body = JSON.parse(response.read)
+            body = headers['Accept']&.equals('application/json') ? Oj.load(response.read) : response.read
             values << body
           ensure
             response.finish

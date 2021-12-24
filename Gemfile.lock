@@ -192,6 +192,7 @@ DEPENDENCIES
   bootsnap
   bunny
   debug
+  nokogiri
   oj
   pg
   rails (~> 7.0.0)

@@ -43,6 +43,9 @@ group :preload, :default do
 
   # RabbitMQ Listeners
   gem 'sneakers'
+
+  # HTML parsing
+  gem 'nokogiri'
 end
 
 group :development, :test do

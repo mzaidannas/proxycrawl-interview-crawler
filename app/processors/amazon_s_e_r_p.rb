@@ -1,7 +1,6 @@
-require 'cgi'
-class TopSearches
+class AmazonSERP
   # HEADERS = {
-  #   'authority' => 'www.semrush.com',
+  #   'authority' => 'www.amazon.com',
   #   'pragma' => 'no-cache',
   #   'cache-control' => 'no-cache',
   #   'dnt' => '1',
@@ -29,15 +28,29 @@ class TopSearches
   end
 
   def call
-    html = AsyncLoader.fetch(urls).first
-    top_searches = Html::TopSearches.parse(html)
-    top_searches.each_slice(10) do |searches|
-      search_urls = searches.map do |search|
-        "https://www.amazon.com/s?k=#{search}"
+    htmls = AsyncLoader.fetch(urls)
+    products = Sync do
+      barrier = Async::Barrier.new
+      values = []
+      htmls.each do |html|
+        barrier.async do
+          begin
+            products = Html::AmazonSERP.parse(html)
+            values << products
+          end
+        end
       end
+
+      Rails.logger.debug 'AsyncHttp#wait'
+      barrier.wait
+      values
+    end
+    products.flatten!
+    products.each_slice(10) do |products_batch|
+      Product.upsert_all(products_batch)
       Publisher.push_data(
-        { consumer: 'Crawler', processor: 'AmazonSERP',
-          data: { urls: search_urls } }, 'urls'
+        { consumer: 'Crawler', processor: 'AmazonProduct',
+          data: { urls: products_batch.map(&:url) } }, 'urls'
       )
     end
   end
