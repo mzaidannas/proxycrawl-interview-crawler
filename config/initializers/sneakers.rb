@@ -10,5 +10,6 @@ if ENV['AMQP_URL']
                        durable: true, # Is queue durable?
                        ack: true      # Must we acknowledge?
                      })
+  Sneakers.logger = Rails.logger
   Sneakers.logger.level = ENV.fetch('LOG_LEVEL', :info).to_sym
 end

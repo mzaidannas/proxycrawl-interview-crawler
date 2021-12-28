@@ -5,7 +5,7 @@ ruby '3.1.0'
 
 group :preload, :default do
   # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-  gem 'rails', '~> 7.0.0'
+  gem 'rails', github: 'rails/rails', branch: 'main'
 
   # Use postgresql as the database for Active Record
   gem 'pg'
@@ -46,6 +46,9 @@ group :preload, :default do
 
   # HTML parsing
   gem 'nokogiri'
+
+  # Logging
+  gem 'console'
 end
 
 group :development, :test do

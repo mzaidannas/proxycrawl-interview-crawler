@@ -44,7 +44,7 @@ module Html
     def parse
       Nokogiri.HTML(@html).css(SELECTORS[:products][:css]).map do |products|
         SELECTORS[:products][:children].each_with_object({}) do |(key, value), hash|
-          hash[key] = value[:type] == 'text' ? products.css(value[:css]).first.text : products.css(value[:css]).first.attr(value[:attribute])
+          hash[key] = value[:type] == 'text' ? products.css(value[:css]).first&.text : products.css(value[:css]).first&.attr(value[:attribute])
         end
       end
     end

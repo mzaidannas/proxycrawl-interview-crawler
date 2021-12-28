@@ -23,7 +23,6 @@ ENV RAKE_ENV $RAILS_ENV
 ENV RACK_ENV $RAILS_ENV
 ARG SECRET_KEY_BASE
 ENV SECRET_KEY_BASE $SECRET_KEY_BASE
-ENV RUBY_OPT "--yjit"
 
 # Adding gems
 COPY Gemfile Gemfile
@@ -48,5 +47,8 @@ RUN if [[ "$RAILS_ENV" != "development" ]]; then\
 
 # Adding project files
 COPY . .
+
+# Use ruby's jit in time compiler for better performance
+ENV RUBY_OPT "--yjit"
 
 CMD [ "sneakers", "work", "GetUrlsWorker", "--require", "config/preload.rb" ]
