@@ -34,10 +34,8 @@ class AmazonSERP
       values = []
       htmls.each do |html|
         barrier.async do
-          begin
-            products = Html::AmazonSERP.parse(html)
-            values << products
-          end
+          products = Html::AmazonSERP.parse(html)
+          values << products
         end
       end
 
@@ -47,7 +45,7 @@ class AmazonSERP
     end
     products.flatten!
     products.each_slice(10) do |products_batch|
-      Product.upsert_all(products_batch)
+      Product.upsert_all(products_batch, unique_by: :url)
       Publisher.push_data(
         { consumer: 'Crawler', processor: 'AmazonProduct',
           data: { urls: products_batch.map(&:url) } }, 'urls'

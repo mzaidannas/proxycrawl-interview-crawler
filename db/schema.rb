@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_24_091627) do
+ActiveRecord::Schema.define(version: 2021_12_28_221348) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(version: 2021_12_24_091627) do
     t.index ["title"], name: "index_products_on_title", opclass: :gin_trgm_ops, using: :gin
     t.index ["updated_at"], name: "index_products_on_updated_at", using: :brin
     t.index ["url"], name: "index_products_on_url", using: :hash
+    t.index ["url"], name: "unique_index_products_on_url", unique: true
   end
 
   add_foreign_key "categories", "categories", column: "parent_id"

@@ -29,15 +29,22 @@ class AmazonProduct
 
   def call
     htmls = AsyncLoader.fetch(urls)
-    top_searches = Html::TopSearches.parse(html)
-    top_searches.each_slice(10) do |searches|
-      search_urls = searches.map do |search|
-        "https://www.amazon.com/s?k=#{CGI.escape(search)}"
+    products = Sync do
+      barrier = Async::Barrier.new
+      values = []
+      htmls.each_with_index do |html, index|
+        barrier.async do
+          product = Html::AmazonProduct.parse(html)
+          values << product.merge(url: urls[index])
+        end
       end
-      Publisher.push_data(
-        { consumer: 'Crawler', processor: 'AmazonSERP',
-          data: { urls: search_urls } }, 'urls'
-      )
+
+      Rails.logger.debug 'AsyncHttp#wait'
+      barrier.wait
+      values
+    end
+    products.each do |product|
+      Product.find_or_initialize_by(url: product[:url]).update_attributes(product.deep_compact)
     end
   end
 end

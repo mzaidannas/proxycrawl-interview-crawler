@@ -19,6 +19,7 @@ require 'active_record/railtie'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+require_relative '../lib/hash'
 require_relative '../lib/async_loader'
 require_relative '../lib/publisher'
 
