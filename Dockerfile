@@ -1,5 +1,5 @@
 # Using alpine image for small size
-FROM 3.1.0-preview1-alpine:latest
+FROM ruby:3.1.0-alpine
 
 # Install runtime dependencies
 RUN apk update && apk add --update tzdata shared-mime-info git
@@ -50,5 +50,7 @@ COPY . .
 
 # Use ruby's jit in time compiler for better performance
 ENV RUBY_OPT "--yjit"
+
+ENTRYPOINT [ "entrypoint.sh" ]
 
 CMD [ "sneakers", "work", "GetUrlsWorker", "--require", "config/preload.rb" ]
