@@ -21,8 +21,6 @@ ARG RAILS_ENV
 ENV RAILS_ENV $RAILS_ENV
 ENV RAKE_ENV $RAILS_ENV
 ENV RACK_ENV $RAILS_ENV
-ARG SECRET_KEY_BASE
-ENV SECRET_KEY_BASE $SECRET_KEY_BASE
 
 # Adding gems
 COPY Gemfile Gemfile
@@ -51,6 +49,6 @@ COPY . .
 # Use ruby's jit in time compiler for better performance
 ENV RUBY_OPT "--yjit"
 
-ENTRYPOINT [ "entrypoint.sh" ]
+ENTRYPOINT [ "./entrypoint.sh" ]
 
 CMD [ "sneakers", "work", "GetUrlsWorker", "--require", "config/preload.rb" ]
