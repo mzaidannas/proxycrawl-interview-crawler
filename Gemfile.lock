@@ -103,7 +103,6 @@ GEM
       async
     async-pool (0.3.9)
       async (>= 1.25)
-    bindex (0.8.1)
     bootsnap (1.9.3)
       msgpack (~> 1.0)
     builder (3.2.4)
@@ -127,7 +126,7 @@ GEM
     io-event (1.0.1)
     irb (1.4.1)
       reline (>= 0.3.0)
-    loofah (2.13.0)
+    loofah (2.19.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.1)
@@ -151,7 +150,7 @@ GEM
     protocol-http2 (0.14.2)
       protocol-hpack (~> 1.4)
       protocol-http (~> 0.18)
-    racc (1.6.0)
+    racc (1.6.1)
     rack (2.2.3)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
@@ -183,11 +182,6 @@ GEM
     timers (4.3.3)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
-    web-console (4.2.0)
-      actionview (>= 6.0.0)
-      activemodel (>= 6.0.0)
-      bindex (>= 0.4.0)
-      railties (>= 6.0.0)
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -210,7 +204,6 @@ DEPENDENCIES
   sneakers
   thread-local
   tzinfo-data
-  web-console
 
 RUBY VERSION
    ruby 3.1.1p18
